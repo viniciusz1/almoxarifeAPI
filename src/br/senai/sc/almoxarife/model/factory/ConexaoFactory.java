@@ -1,4 +1,4 @@
-package br.senai.sc.almoxarife.model.dao;
+package br.senai.sc.almoxarife.model.factory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
