@@ -2,11 +2,13 @@ package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Pedido;
 import br.senai.sc.almoxarife.model.entities.Produto;
+import br.senai.sc.almoxarife.model.entities.Status;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PedidoDAO {
     private Connection conn;
@@ -32,13 +34,12 @@ public class PedidoDAO {
     public Pedido extrairObjetoPedido(ResultSet resultSet){
         try{
             return new Pedido(
-                    resultSet.getInt("codigo");
-                    resultSet.getString("nomeProfessor");
-                    resultSet.getString("usuarioEmail");
-                    resultSet.getDate("dataEntrega");
-                    resultSet.getDate("dataDevolucao");
-                    resultSet.getInt("status");
-                    resultSet.getInt("produtos");
+                    resultSet.getInt("codigo"),
+                    resultSet.getString("usuarioEmail"),
+                    resultSet.getDate("dataEntrega"),
+                    resultSet.getDate("dataDevolucao"),
+                    resultSet.getString("status"),
+                    (List) resultSet.getArray("produtos")
             );
         }catch(Exception e){
             throw new RuntimeException("Erro ao extrair o pedido! extrairObjetoPedido");

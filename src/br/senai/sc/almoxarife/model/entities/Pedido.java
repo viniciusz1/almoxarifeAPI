@@ -5,14 +5,13 @@ import java.util.List;
 
 public class Pedido {
     private Integer codigo;
-    private String nomeProfessor, usuarioEmail;
+    private String  usuarioEmail;
     private Date dataEntrega, dataDevolucao;
     private Status status;
     private List produtos;
 
-    public Pedido(Integer codigo, String nomeProfessor, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status, List produtos) {
+    public Pedido(Integer codigo, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status, List produtos) {
         this.codigo = codigo;
-        this.nomeProfessor = nomeProfessor;
         this.usuarioEmail = usuarioEmail;
         this.dataEntrega = dataEntrega;
         this.dataDevolucao = dataDevolucao;
