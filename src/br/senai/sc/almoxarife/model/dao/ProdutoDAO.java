@@ -6,22 +6,26 @@ import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProdutoDAO {
-    public ArrayList<Produto> buscarTodosProdutos(){
+    private Connection conn;
+    public ArrayList<Produto> buscarTodosProdutos() {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
-        ConexaoFactory conexao = new ConexaoFactory();
-        Connection connection = conexao.conectaBD();
-        String query = "select * from produtos";
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet resultset = statement.executeQuery();
-
-        while (resultset != null && resultset.next()) {
-            listaDeProdutos.add(extrairObjetoProduto(resultset));
+        String sql = "select * from produtos";
+        try (PreparedStatement prtm = conn.prepareStatement(sql)) {
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                while (resultSet.next()) {
+                    listaDeProdutos.add(extrairObjetoProduto(resultSet));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL! buscarTodosProdutos");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL! buscarTodosProdutos");
         }
-
-        return null;
+        return listaDeProdutos;
     }
 
     public Produto extrairObjetoProduto(ResultSet resultset){
@@ -36,19 +40,33 @@ public class ProdutoDAO {
                     resultset.getString("descricao"),
                     resultset.getString("imagem"));
         }catch (Exception e) {
-            throw new RuntimeException("Erro ao extrair o objeto!");
+            throw new RuntimeException("Erro ao extrair o produto! extrairObjetoProduto");
         }
 
     }
 
-    public Produto buscarProdutoPorCodigo(){
-        String query = "select * from produtos where codigo = ?";
-        return null;
+    public Produto buscarProdutoPorCodigo(int cpf){
+        String sql = "select * from pessoas where cpf = ?";
+        try (PreparedStatement prtm = conn.prepareStatement(sql)) {
+            prtm.setInt(1, cpf);
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                if (resultSet.next()) {
+                    return extrairObjetoProduto(resultSet);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL! buscarProdutoPorCodigo");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL! buscarProdutoPorCodigo");
+        }
+        throw new RuntimeException("Algo deu ruim! buscarProdutoPorCodigo");
     }
+
     public Produto adicionarQuantidadeProduto(){
         String query = "?";
         return null;
     }
+
     public void inserirProduto(){
         String query = "insert into produtos(codigo,nome,quantidadeTotal,quantidadeReservada," +
                 "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?,?)";

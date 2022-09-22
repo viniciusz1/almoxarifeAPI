@@ -8,17 +8,15 @@ public class Pedido {
     private String nomeProfessor, usuarioEmail;
     private Date dataEntrega, dataDevolucao;
     private Status status;
-    private List usuario;
     private List produtos;
 
-    public Pedido(Integer codigo, String nomeProfessor, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status, List usuario, List produtos) {
+    public Pedido(Integer codigo, String nomeProfessor, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status, List produtos) {
         this.codigo = codigo;
         this.nomeProfessor = nomeProfessor;
         this.usuarioEmail = usuarioEmail;
         this.dataEntrega = dataEntrega;
         this.dataDevolucao = dataDevolucao;
         this.status = status;
-        this.usuario = usuario;
         this.produtos = produtos;
     }
 
