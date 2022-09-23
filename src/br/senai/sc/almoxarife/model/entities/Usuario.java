@@ -2,9 +2,14 @@ package br.senai.sc.almoxarife.model.entities;
 
 public class Usuario {
 
-    private String email, nome, usuario, senha, telefone, nivelAcesso;
+    private String email;
+    private String nome;
+    private String usuario;
+    private String senha;
+    private String telefone;
+    private Integer nivelAcesso;
 
-    public Usuario(String email, String nome, String usuario, String senha, String telefone, String nivelAcesso) {
+    public Usuario(String email, String nome, String usuario, String senha, String telefone, Integer nivelAcesso) {
         this.email = email;
         this.nome = nome;
         this.usuario = usuario;
@@ -53,11 +58,11 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public String getNivelAcesso() {
+    public Integer getNivelAcesso() {
         return nivelAcesso;
     }
 
-    public void setNivelAcesso(String nivelAcesso) {
+    public void setNivelAcesso(Integer nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
     }
 
