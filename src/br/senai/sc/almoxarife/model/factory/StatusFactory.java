@@ -5,17 +5,15 @@ import br.senai.sc.almoxarife.model.entities.Status;
 public class StatusFactory {
     public Status getStatus(Integer ordinal){
         switch (ordinal){
-            case 0 -> {
-                return Status.AGUARDANDO;
-            }
             case 1 -> {
                 return Status.DEVOLVIDO;
             }
-            default -> {
+            case 2 -> {
                 return Status.ENTREGUE;
+            }
+            default -> {
+                return Status.AGUARDANDO; //0
             }
         }
     }
 }
-
-//a
