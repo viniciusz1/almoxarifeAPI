@@ -16,6 +16,10 @@ public class Usuario {
         this.nivelAcesso = nivelAcesso;
     }
 
+    public static Usuario inserir(String email, String nome, String usuarioNome, String senha, String telefone, Integer nivelAcesso) {
+        return null;
+    }
+
     public String getEmail() {
         return email;
     }
