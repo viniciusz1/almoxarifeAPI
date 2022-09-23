@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PedidoDAO {
@@ -23,13 +24,13 @@ public class PedidoDAO {
                 while (resultSet.next()) {
                     listaDePedidos.add(extrairObjetoPedido(resultSet));
                 }
+                return listaDePedidos;
             } catch (Exception e) {
                 throw new RuntimeException("Erro na execução do comando SQL! listaDePedidos");
             }
         } catch (Exception e) {
             throw new RuntimeException("Erro na preparação do comando SQL! listaDePedidos");
         }
-        return listaDePedidos;
     }
 
     public Pedido extrairObjetoPedido(ResultSet resultSet){
@@ -47,24 +48,76 @@ public class PedidoDAO {
         }
     }
 
-    public Pedido buscarPedidoPorCodigo() {
+    public Pedido buscarPedidoPorCodigo(int codigo) {
         String query = "select * from pedido where codigo = ?";
-        return null;
+        try (PreparedStatement prtm = conn.prepareStatement(query)) {
+            prtm.setInt(1, codigo);
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                if (resultSet.next()) {
+                    return extrairObjetoPedido(resultSet);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL!");
+        }
+        throw new RuntimeException("Algo deu ruim!");
     }
 
-    public Pedido buscarPedidoPorStatus(){
+    public ArrayList<Pedido> buscarPedidoPorStatus(Status status){
+        ArrayList<Pedido> listaDePedidos = new ArrayList<>();
         String query = "select * from pedido where status = ?";
-        return null;
+        try (PreparedStatement prtm = conn.prepareStatement(query)) {
+            prtm.setInt(1, status.ordinal());
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                if (resultSet.next()) {
+                    listaDePedidos.add(extrairObjetoPedido(resultSet));
+                }
+                return listaDePedidos;
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL!");
+        }
     }
 
-    public Pedido buscarEntradaPorData(){
+    public ArrayList<Pedido> buscarPedidoEntradaPorData(Date data){
         String query = "select * from pedido where dataEntrada = ?";
-        return null;
+        ArrayList<Pedido> listaDePedidos = new ArrayList<>();
+        try (PreparedStatement prtm = conn.prepareStatement(query)) {
+            prtm.setDate(1, (java.sql.Date) data);
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                if (resultSet.next()) {
+                    listaDePedidos.add(extrairObjetoPedido(resultSet));
+                }
+                return listaDePedidos;
+
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL!");
+        }
     }
 
-    public Pedido BuscarDevolucaoPorData(){
+    public ArrayList<Pedido> buscarPedidoDevolucaoPorData(Date data){
+        ArrayList<Pedido> listaDePedidos = new ArrayList<>();
         String query = "select * from pedido where dataDevolucao = ?";
-        return null;
+        try (PreparedStatement prtm = conn.prepareStatement(query)) {
+            prtm.setDate(1, (java.sql.Date) data);
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                if (resultSet.next()) {
+                    listaDePedidos.add(extrairObjetoPedido(resultSet));
+                }
+                return listaDePedidos;
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL!");
+        }
     }
     public void inserirPedidoDB(Pedido pedido){
     //mais complexo
