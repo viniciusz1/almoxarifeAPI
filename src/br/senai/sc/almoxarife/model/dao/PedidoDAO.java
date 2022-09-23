@@ -3,6 +3,7 @@ package br.senai.sc.almoxarife.model.dao;
 import br.senai.sc.almoxarife.model.entities.Pedido;
 import br.senai.sc.almoxarife.model.entities.Produto;
 import br.senai.sc.almoxarife.model.entities.Status;
+import br.senai.sc.almoxarife.model.factory.StatusFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +39,7 @@ public class PedidoDAO {
                     resultSet.getString("usuarioEmail"),
                     resultSet.getDate("dataEntrega"),
                     resultSet.getDate("dataDevolucao"),
-                    resultSet.getString("status"),
+                    new StatusFactory().getStatus(resultSet.getInt("status")),
                     (List) resultSet.getArray("produtos")
             );
         }catch(Exception e){
