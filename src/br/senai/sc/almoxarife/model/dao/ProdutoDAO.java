@@ -62,12 +62,12 @@ public class ProdutoDAO {
         throw new RuntimeException("Algo deu ruim! buscarProdutoPorCodigo");
     }
 
-    public Produto adicionarQuantidadeProduto(){
+    public Produto adicionarQuantidadeProduto(int codigo, int qtd){
         String query = "?";
         return null;
     }
 
-    public void inserirProduto(){
+    public void inserirProduto(Produto produto){
         String query = "insert into produtos(codigo,nome,quantidadeTotal,quantidadeReservada," +
                 "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?,?)";
     }

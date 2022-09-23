@@ -2,6 +2,7 @@ package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Entrada;
 import br.senai.sc.almoxarife.model.entities.Usuario;
+import br.senai.sc.almoxarife.model.factory.nivelAcessoFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +13,8 @@ import java.util.List;
 public class UsuarioDAO {
     private Connection conn;
 
-    public void inserirEntrada(){
-        String query = "insert into usuario(email, nome, usuario, senha, telefone, nivelAcesso) values(?,?,?,?,?,?)";
+    public void inserirUsuario(Usuario usuario){
+        String query = "insert into usuario(email, nome, usuario, senha, nivelAcesso) values(?,?,?,?,?)";
     }
 
     public ArrayList<Usuario> buscarTodosUsuarios(){
@@ -40,11 +41,35 @@ public class UsuarioDAO {
                     resultSet.getString("nome"),
                     resultSet.getString("usuario"),
                     resultSet.getString("senha"),
-                    resultSet.getString("telefone"),
-                    resultSet.getInt("nivelAcesso")
+                    new nivelAcessoFactory().getNivelAcesso(resultSet.getInt("nivelAcesso"))
             );
         }catch(Exception e){
             throw new RuntimeException("Erro ao extrair o pedido! extrairObjetoUsuario");
         }
     }
+
+    public void atualizarUsuario(String email, Usuario usuarioAtualizado){
+        // email, nome, usuario, senha, telefone, nivelAcesso
+        String sqlCommand = "UPDATE usuario set " +
+                "email = ?, nome = ?, usuario = ?, " +
+                "senha = ?, nivelAcesso = ? where email = ?";
+
+        try(PreparedStatement pstm = conn.prepareStatement(sqlCommand)) {
+            pstm.setString(1, usuarioAtualizado.getEmail());
+            pstm.setString(2, usuarioAtualizado.getNome());
+            pstm.setString(3, usuarioAtualizado.getUsuario());
+            pstm.setString(4, usuarioAtualizado.getSenha());
+            pstm.setInt(5, usuarioAtualizado.getNivelAcesso().ordinal());
+            pstm.setString(6, email);
+            try {
+                pstm.execute();
+            }catch (Exception e){
+                throw new RuntimeException("Erro na execução do comando SQL - LivroUpdate");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL - LivroUpdate");
+        }
+        System.out.println("Usuario Atualizado");
+    }
+
 }

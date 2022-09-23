@@ -6,15 +6,13 @@ public class Usuario {
     private String nome;
     private String usuario;
     private String senha;
-    private String telefone;
-    private Integer nivelAcesso;
+    private nivelAcesso nivelAcesso;
 
-    public Usuario(String email, String nome, String usuario, String senha, String telefone, Integer nivelAcesso) {
+    public Usuario(String email, String nome, String usuario, String senha, nivelAcesso nivelAcesso) {
         this.email = email;
         this.nome = nome;
         this.usuario = usuario;
         this.senha = senha;
-        this.telefone = telefone;
         this.nivelAcesso = nivelAcesso;
     }
 
@@ -50,19 +48,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public Integer getNivelAcesso() {
+    public nivelAcesso getNivelAcesso() {
         return nivelAcesso;
     }
 
-    public void setNivelAcesso(Integer nivelAcesso) {
+    public void setNivelAcesso(nivelAcesso nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
     }
 
