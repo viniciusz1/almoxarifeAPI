@@ -25,10 +25,10 @@ public class EntradaDAO {
                     listaDeEntradas.add(extrairObjetoEntrada(resultSet));
                 }
             } catch (Exception e) {
-                throw new RuntimeException("Erro na execução do comando SQL! listaDePedidos");
+                throw new RuntimeException("Erro na execução do comando SQL! listaDeEntradas");
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro na preparação do comando SQL! listaDePedidos");
+            throw new RuntimeException("Erro na preparação do comando SQL! listaDeEntradas");
         }
         return listaDeEntradas;
     }
@@ -43,7 +43,7 @@ public class EntradaDAO {
                     (List) resultSet.getArray("produtos")
             );
         }catch(Exception e){
-            throw new RuntimeException("Erro ao extrair o pedido! extrairObjetoPedido");
+            throw new RuntimeException("Erro ao extrair o pedido! extrairObjetoEntrada");
         }
     }
 
