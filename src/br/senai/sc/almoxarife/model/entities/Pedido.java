@@ -19,6 +19,14 @@ public class Pedido {
         this.produtos = produtos;
     }
 
+    public Pedido(Integer codigo, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status) {
+        this.codigo = codigo;
+        this.usuarioEmail = usuarioEmail;
+        this.dataEntrega = dataEntrega;
+        this.dataDevolucao = dataDevolucao;
+        this.status = status;
+    }
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -79,7 +87,7 @@ public class Pedido {
         return produtos;
     }
 
-    public void setProdutos(List produtos) {
-        this.produtos = produtos;
+    public void addProduto(Produto produto) {
+        this.produtos.add(produto);
     }
 }
