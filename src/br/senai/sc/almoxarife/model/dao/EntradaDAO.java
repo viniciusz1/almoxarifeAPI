@@ -11,7 +11,7 @@ import java.util.List;
 public class EntradaDAO {
     private Connection conn;
 
-    public void inserirEntrada(){
+    public void inserirEntrada(Entrada entrada){
         String query = "insert into entradas(codigo, quantidade, data, nomeProduto) values(?,?,?,?)";
     }
 
