@@ -35,14 +35,6 @@ public class Pedido {
         this.codigo = codigo;
     }
 
-    public String getNomeProfessor() {
-        return nomeProfessor;
-    }
-
-    public void setNomeProfessor(String nomeProfessor) {
-        this.nomeProfessor = nomeProfessor;
-    }
-
     public String getUsuarioEmail() {
         return usuarioEmail;
     }
@@ -73,14 +65,6 @@ public class Pedido {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public List getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(List usuario) {
-        this.usuario = usuario;
     }
 
     public List getProdutos() {
