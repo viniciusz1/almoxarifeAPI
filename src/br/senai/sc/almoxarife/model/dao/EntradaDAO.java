@@ -3,7 +3,6 @@ package br.senai.sc.almoxarife.model.dao;
 import br.senai.sc.almoxarife.model.entities.Entrada;
 import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
