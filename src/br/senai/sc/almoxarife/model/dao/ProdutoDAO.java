@@ -1,6 +1,7 @@
 package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Produto;
+import br.senai.sc.almoxarife.model.entities.Usuario;
 import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 
 import java.sql.Connection;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 
 public class ProdutoDAO {
     private Connection conn;
+    public ProdutoDAO() {
+        this.conn = new ConexaoFactory().conectaBD();
+    }
     public ArrayList<Produto> buscarTodosProdutos() {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
         String sql = "select * from produtos";
@@ -68,8 +72,50 @@ public class ProdutoDAO {
     }
 
     public void inserirProduto(Produto produto){
-        String query = "insert into produtos(codigo,nome,quantidadeTotal,quantidadeReservada," +
-                "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?,?)";
+        String query = "insert into produtos(nome,quantidadeTotal,quantidadeReservada," +
+                "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?)";
+        try(PreparedStatement prtm = conn.prepareStatement(query)) {
+            prtm.setString(1, produto.getNome());
+            prtm.setInt(2, produto.getQuantidadeTotal());
+            prtm.setInt(3, produto.getQuantidadeReservada());
+            prtm.setString(4, produto.getClassificacao());
+            prtm.setString(5, produto.getLocalidade());
+            prtm.setString(6, produto.getOpcaoUso());
+            prtm.setString(7, produto.getDescricao());
+            prtm.setString(8, produto.getImagem());
+            try {
+                prtm.execute();
+            }catch (Exception e){
+                throw new RuntimeException("Erro na execução do comando SQL - InserirProduto");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL - InserirProduto");
+        }
+        System.out.println("Cadastro chegou ao fim");
+    }
+
+    public void atualizarProduto(Integer codigo, Produto produtoAtualizado){
+        String query = "update produtos set nome = ?, quantidadeTotal = ?," +
+                "quantidadeReservada = ?, classificacao = ?,localidade = ?" +
+                ",opcaoUso = ?,descricao = ?,imagem = ?) values (?,?,?,?,?,?,?,?)";
+        try(PreparedStatement pstm = conn.prepareStatement(query)) {
+            pstm.setString(1, produtoAtualizado.getNome());
+            pstm.setInt(2, produtoAtualizado.getQuantidadeTotal());
+            pstm.setInt(3, produtoAtualizado.getQuantidadeReservada());
+            pstm.setString(4, produtoAtualizado.getClassificacao());
+            pstm.setString(5, produtoAtualizado.getLocalidade());
+            pstm.setString(6, produtoAtualizado.getOpcaoUso());
+            pstm.setString(7, produtoAtualizado.getDescricao());
+            pstm.setString(8, produtoAtualizado.getImagem());
+            try {
+                pstm.execute();
+            }catch (Exception e){
+                throw new RuntimeException("Erro na execução do comando SQL - atualizarProduto");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL - atualizarProduto");
+        }
+        System.out.println("Produto Atualizado");
     }
 
 }
