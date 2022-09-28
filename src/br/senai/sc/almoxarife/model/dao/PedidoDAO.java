@@ -36,6 +36,43 @@ public class PedidoDAO {
         }
     }
 
+    public ArrayList<Pedido> buscarPedidosProfessor(String emailProfessor){
+        ArrayList<Pedido> listaDePedidos = new ArrayList<>();
+        String sql = "SELECT pedido.* from pedido " +
+                "join usuario " +
+                "on usuario.email = ?;";
+        try (PreparedStatement prtm = conn.prepareStatement(sql)) {
+            prtm.setString(1, emailProfessor);
+            try (ResultSet resultSet = prtm.executeQuery()) {
+                while (resultSet.next()) {
+                    Pedido pedido = extrairObjetoPedido(resultSet);
+                    sql = "select produto.nome, produto.quantidadeTotal, " +
+                            "produtoPedido.quantidade, produto.classificacao, " +
+                            "produto.localidade, produto.opcaoUso, produto.descricao, " +
+                            "produto.codigo, produto.imagem from produto"+
+                    "join produtoPedido"+
+                    "on produtoPedido.produtoCodigo = produto.codigo"+
+                    "where produtoPedido.pedidoCodigo = ?;";
+                    try (PreparedStatement prtm2 = conn.prepareStatement(sql)) {
+                        prtm.setInt(1, resultSet.getInt("codigo"));
+                        try (ResultSet resultSet2 = prtm.executeQuery()) {
+                            while (resultSet2.next()){
+                                ProdutoDAO daoProduto = new ProdutoDAO();
+                                pedido.addProduto(daoProduto.extrairObjetoProduto(resultSet2));
+                            }
+                            listaDePedidos.add(pedido);
+                        }
+                    }
+                }
+                return listaDePedidos;
+            } catch (Exception e) {
+                throw new RuntimeException("Erro na execução do comando SQL! listaDePedidos");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na preparação do comando SQL! listaDePedidos");
+        }
+    }
+
     public Pedido extrairObjetoPedido(ResultSet resultSet){
         try{
             return new Pedido(
@@ -43,9 +80,7 @@ public class PedidoDAO {
                     resultSet.getString("usuarioEmail"),
                     resultSet.getDate("dataEntrega"),
                     resultSet.getDate("dataDevolucao"),
-                    new StatusFactory().getStatus(resultSet.getInt("status")),
-                    (List) resultSet.getArray("produtos")
-            );
+                    new StatusFactory().getStatus(resultSet.getInt("status")));
         }catch(Exception e){
             throw new RuntimeException("Erro ao extrair o pedido! extrairObjetoPedido");
         }
