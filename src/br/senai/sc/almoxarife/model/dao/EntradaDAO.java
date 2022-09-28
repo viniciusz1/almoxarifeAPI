@@ -3,7 +3,6 @@ package br.senai.sc.almoxarife.model.dao;
 import br.senai.sc.almoxarife.model.entities.Entrada;
 import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +16,20 @@ public class EntradaDAO {
     }
 
     public void inserirEntrada(Entrada entrada){
-        String query = "insert into entradas(codigo, quantidade, data, nomeProduto) values(?,?,?,?)";
+        String query = "insert into entradas(quantidade, data, produtoCodigo) values(?,?,?)";
+        try(PreparedStatement pstm = conn.prepareStatement(query)) {
+            pstm.setInt(1, entrada.getQuantidade());
+            pstm.setObject(2, entrada.getData());
+            pstm.setInt(3, entrada.getCodigoProduto());
+            try {
+                pstm.execute();
+            }catch (Exception e){
+                throw new RuntimeException("Erro na execução do comando SQL - inserirEntrada");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL - inserirEntrada");
+        }
+        System.out.println("Entrada Criada");
     }
 
     public ArrayList<Entrada> buscarTodasEntradas(){
