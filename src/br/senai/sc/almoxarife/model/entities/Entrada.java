@@ -8,12 +8,11 @@ public class Entrada {
     private Date data;
     private List produtos;
 
-    public Entrada(Integer codigo, Integer quantidade, Integer codigoProduto, Date data, List produtos) {
+    public Entrada(Integer codigo, Integer quantidade, Integer codigoProduto, Date data) {
         this.codigo = codigo;
         this.quantidade = quantidade;
         this.codigoProduto = codigoProduto;
         this.data = data;
-        this.produtos = produtos;
     }
 
     public Integer getCodigo() {
@@ -48,11 +47,5 @@ public class Entrada {
         this.data = data;
     }
 
-    public List getProdutos() {
-        return produtos;
-    }
 
-    public void setProdutos(List produtos) {
-        this.produtos = produtos;
-    }
 }

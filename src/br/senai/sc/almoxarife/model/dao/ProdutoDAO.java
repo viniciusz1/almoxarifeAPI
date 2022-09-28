@@ -1,7 +1,6 @@
 package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Produto;
-import br.senai.sc.almoxarife.model.entities.Usuario;
 import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 
 import java.sql.Connection;
@@ -74,21 +73,35 @@ public class ProdutoDAO {
     public void inserirProduto(Produto produto){
         String query = "insert into produtos(nome,quantidadeTotal,quantidadeReservada," +
                 "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?)";
-        try(PreparedStatement prtm = conn.prepareStatement(query)) {
-            prtm.setString(1, produto.getNome());
-            prtm.setInt(2, produto.getQuantidadeTotal());
-            prtm.setInt(3, produto.getQuantidadeReservada());
-            prtm.setString(4, produto.getClassificacao());
-            prtm.setString(5, produto.getLocalidade());
-            prtm.setString(6, produto.getOpcaoUso());
-            prtm.setString(7, produto.getDescricao());
-            prtm.setString(8, produto.getImagem());
+
+        try(PreparedStatement pstm = conn.prepareStatement(query)) {
+            System.out.println("1");
+            pstm.setString(1, produto.getNome());
+            System.out.println("2");
+            pstm.setInt(2, produto.getQuantidadeTotal());
+            System.out.println("3");
+            pstm.setInt(3, produto.getQuantidadeReservada());
+            System.out.println("4");
+            pstm.setString(4, produto.getClassificacao());
+            System.out.println("5");
+            pstm.setString(5, produto.getLocalidade());
+            System.out.println("6");
+            pstm.setString(6, produto.getOpcaoUso());
+            System.out.println("7");
+            pstm.setString(7, produto.getDescricao());
+            System.out.println("8");
+            pstm.setString(8, produto.getImagem());
+            System.out.println("9");
+
             try {
-                prtm.execute();
+                System.out.println("Ali");
+                pstm.execute();
+                System.out.println("Depois");
             }catch (Exception e){
                 throw new RuntimeException("Erro na execução do comando SQL - InserirProduto");
             }
         }catch (Exception e){
+            e.printStackTrace();
             throw new RuntimeException("Erro na preparação do comando SQL - InserirProduto");
         }
         System.out.println("Cadastro chegou ao fim");
