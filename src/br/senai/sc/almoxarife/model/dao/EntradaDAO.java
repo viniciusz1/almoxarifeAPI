@@ -55,8 +55,7 @@ public class EntradaDAO {
                     resultSet.getInt("codigo"),
                     resultSet.getInt("quantidade"),
                     resultSet.getInt("produtoCodigo"),
-                    resultSet.getDate("data"),
-                    (List) resultSet.getArray("produtos")
+                    resultSet.getDate("data")
             );
         }catch(Exception e){
             throw new RuntimeException("Erro ao extrair o pedido! extrairObjetoEntrada");
