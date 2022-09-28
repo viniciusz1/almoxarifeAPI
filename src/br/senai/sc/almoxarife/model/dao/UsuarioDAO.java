@@ -15,6 +15,9 @@ public class UsuarioDAO {
 
     public void inserirUsuario(Usuario usuario){
         String query = "insert into usuario(email, nome, usuario, senha, nivelAcesso) values(?,?,?,?,?)";
+
+
+
     }
 
     public ArrayList<Usuario> buscarTodosUsuarios(){

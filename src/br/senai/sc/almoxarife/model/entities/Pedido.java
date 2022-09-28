@@ -1,5 +1,6 @@
 package br.senai.sc.almoxarife.model.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,9 +9,9 @@ public class Pedido {
     private String  usuarioEmail;
     private Date dataEntrega, dataDevolucao;
     private Status status;
-    private List produtos;
+    private ArrayList<Produto> produtos = new ArrayList<Produto>();
 
-    public Pedido(Integer codigo, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status, List produtos) {
+    public Pedido(Integer codigo, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status, ArrayList produtos) {
         this.codigo = codigo;
         this.usuarioEmail = usuarioEmail;
         this.dataEntrega = dataEntrega;
@@ -25,6 +26,18 @@ public class Pedido {
         this.dataEntrega = dataEntrega;
         this.dataDevolucao = dataDevolucao;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "codigo=" + codigo +
+                ", usuarioEmail='" + usuarioEmail + '\'' +
+                ", dataEntrega=" + dataEntrega +
+                ", dataDevolucao=" + dataDevolucao +
+                ", status=" + status +
+                ", produtos=" + produtos +
+                '}';
     }
 
     public Integer getCodigo() {

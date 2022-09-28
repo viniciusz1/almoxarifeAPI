@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoFactory {
-    private final String URL = "jdbc:mysql://localhost:3306/livraria";
+    private final String URL = "jdbc:mysql://localhost:3306/almoxarife";
     private final String USERNAME = "root";
     private final String PASSWORD = "root";
     public Connection conectaBD() throws SQLException {

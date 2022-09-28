@@ -16,6 +16,21 @@ public class Produto {
         this.imagem = imagem;
     }
 
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "codigo=" + codigo +
+                ", quantidadeTotal=" + quantidadeTotal +
+                ", quantidadeReservada=" + quantidadeReservada +
+                ", nome='" + nome + '\'' +
+                ", classificacao='" + classificacao + '\'' +
+                ", localidade='" + localidade + '\'' +
+                ", opcaoUso='" + opcaoUso + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", imagem='" + imagem + '\'' +
+                '}';
+    }
+
     public Integer getCodigo() {
         return codigo;
     }

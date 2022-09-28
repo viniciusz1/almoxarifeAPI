@@ -63,7 +63,14 @@ public class ProdutoDAO {
     }
 
     public Produto adicionarQuantidadeProduto(int codigo, int qtd){
-        String query = "?";
+        String sql = "UPDATE produto SET quantidade = quantidade + ? WHERE codigo = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, qtd);
+            pstmt.setInt(2, codigo);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 
