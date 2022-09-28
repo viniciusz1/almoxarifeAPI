@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public class ProdutoDAO {
     private Connection conn;
+    public ProdutoDAO() {
+        this.conn = new ConexaoFactory().conectaBD();
+    }
     public ArrayList<Produto> buscarTodosProdutos() {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
         String sql = "select * from produtos";
@@ -68,8 +71,28 @@ public class ProdutoDAO {
     }
 
     public void inserirProduto(Produto produto){
-        String query = "insert into produtos(codigo,nome,quantidadeTotal,quantidadeReservada," +
-                "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?,?)";
+        String query = "insert into produtos(nome,quantidadeTotal,quantidadeReservada," +
+                "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?)";
+        try(PreparedStatement prtm = conn.prepareStatement(query)) {
+            prtm.setString(1, produto.getNome());
+            prtm.setInt(2, produto.getQuantidadeTotal());
+            prtm.setInt(3, produto.getQuantidadeReservada());
+            prtm.setString(4, produto.getClassificacao());
+            prtm.setString(5, produto.getLocalidade());
+            prtm.setString(6, produto.getOpcaoUso());
+            prtm.setString(7, produto.getDescricao());
+            prtm.setString(8, produto.getImagem());
+            try {
+                prtm.execute();
+            }catch (Exception e){
+                throw new RuntimeException("Erro na execução do comando SQL - InserirProduto");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL - InserirProduto");
+        }
+        System.out.println("Cadastro chegou ao fim");
+
+
     }
 
 }
