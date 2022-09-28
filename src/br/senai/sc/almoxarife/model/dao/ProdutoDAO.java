@@ -1,6 +1,7 @@
 package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Produto;
+import br.senai.sc.almoxarife.model.entities.Usuario;
 import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 
 import java.sql.Connection;
@@ -91,8 +92,30 @@ public class ProdutoDAO {
             throw new RuntimeException("Erro na preparação do comando SQL - InserirProduto");
         }
         System.out.println("Cadastro chegou ao fim");
+    }
 
-
+    public void atualizarProduto(Integer codigo, Produto produtoAtualizado){
+        String query = "update produtos set nome = ?, quantidadeTotal = ?," +
+                "quantidadeReservada = ?, classificacao = ?,localidade = ?" +
+                ",opcaoUso = ?,descricao = ?,imagem = ?) values (?,?,?,?,?,?,?,?)";
+        try(PreparedStatement pstm = conn.prepareStatement(query)) {
+            pstm.setString(1, produtoAtualizado.getNome());
+            pstm.setInt(2, produtoAtualizado.getQuantidadeTotal());
+            pstm.setInt(3, produtoAtualizado.getQuantidadeReservada());
+            pstm.setString(4, produtoAtualizado.getClassificacao());
+            pstm.setString(5, produtoAtualizado.getLocalidade());
+            pstm.setString(6, produtoAtualizado.getOpcaoUso());
+            pstm.setString(7, produtoAtualizado.getDescricao());
+            pstm.setString(8, produtoAtualizado.getImagem());
+            try {
+                pstm.execute();
+            }catch (Exception e){
+                throw new RuntimeException("Erro na execução do comando SQL - atualizarProduto");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL - atualizarProduto");
+        }
+        System.out.println("Produto Atualizado");
     }
 
 }
