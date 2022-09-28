@@ -49,10 +49,10 @@ public class ProdutoDAO {
 
     }
 
-    public Produto buscarProdutoPorCodigo(int cpf){
-        String sql = "select * from pessoas where cpf = ?";
+    public Produto buscarProdutoPorCodigo(int codigoProduto){
+        String sql = "select * from produto where codigo = ?";
         try (PreparedStatement prtm = conn.prepareStatement(sql)) {
-            prtm.setInt(1, cpf);
+            prtm.setInt(1, codigoProduto);
             try (ResultSet resultSet = prtm.executeQuery()) {
                 if (resultSet.next()) {
                     return extrairObjetoProduto(resultSet);

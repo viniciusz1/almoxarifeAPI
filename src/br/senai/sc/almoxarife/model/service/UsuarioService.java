@@ -10,6 +10,7 @@ public class UsuarioService {
     public void inserir(Usuario usuario){
         new UsuarioDAO().inserirUsuario(usuario);
     }
+
     public ArrayList<Usuario> buscarTodosUsuarios(){
         return new UsuarioDAO().buscarTodosUsuarios();
     }
