@@ -16,7 +16,7 @@ public class EntradaDAO {
     }
 
     public void inserirEntrada(Entrada entrada){
-        String query = "insert into entradas(quantidade, data, produtoCodigo) values(?,?,?)";
+        String query = "insert into entrada(quantidade, data, produtoCodigo) values(?,?,?)";
         try(PreparedStatement pstm = conn.prepareStatement(query)) {
             pstm.setInt(1, entrada.getQuantidade());
             pstm.setObject(2, entrada.getData());

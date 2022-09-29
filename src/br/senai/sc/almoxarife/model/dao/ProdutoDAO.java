@@ -16,7 +16,7 @@ public class ProdutoDAO {
     }
     public ArrayList<Produto> buscarTodosProdutos() {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
-        String sql = "select * from produtos";
+        String sql = "select * from produto";
         try (PreparedStatement prtm = conn.prepareStatement(sql)) {
             try (ResultSet resultSet = prtm.executeQuery()) {
                 while (resultSet.next()) {
@@ -71,7 +71,7 @@ public class ProdutoDAO {
     }
 
     public void inserirProduto(Produto produto){
-        String query = "insert into produtos(nome,quantidadeTotal,quantidadeReservada," +
+        String query = "insert into produto(nome,quantidadeTotal,quantidadeReservada," +
                 "classificacao,localidade,opcaoUso,descricao,imagem) values (?,?,?,?,?,?,?,?)";
 
         try(PreparedStatement pstm = conn.prepareStatement(query)) {
@@ -108,7 +108,7 @@ public class ProdutoDAO {
     }
 
     public void atualizarProduto(Integer codigo, Produto produtoAtualizado){
-        String query = "update produtos set nome = ?, quantidadeTotal = ?," +
+        String query = "update produto set nome = ?, quantidadeTotal = ?," +
                 "quantidadeReservada = ?, classificacao = ?,localidade = ?" +
                 ",opcaoUso = ?,descricao = ?,imagem = ?) values (?,?,?,?,?,?,?,?)";
         try(PreparedStatement pstm = conn.prepareStatement(query)) {
