@@ -11,6 +11,15 @@ import java.util.ArrayList;
 
 public class ProdutoDAO {
     private Connection conn;
+
+    public ProdutoDAO(){
+        try {
+            conn = new ConexaoFactory().conectaBD();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public ArrayList<Produto> buscarTodosProdutos() {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
         String sql = "select * from produtos";

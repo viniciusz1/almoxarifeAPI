@@ -19,6 +19,9 @@ public class Pedido {
         this.status = status;
         this.produtos = produtos;
     }
+    public Pedido(){
+
+    };
 
     public Pedido(Integer codigo, String usuarioEmail, Date dataEntrega, Date dataDevolucao, Status status) {
         this.codigo = codigo;
