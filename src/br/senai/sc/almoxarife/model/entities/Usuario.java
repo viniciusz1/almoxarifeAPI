@@ -16,8 +16,16 @@ public class Usuario {
         this.nivelAcesso = nivelAcesso;
     }
 
-    public static Usuario inserir(String email, String nome, String usuarioNome, String senha, String telefone, Integer nivelAcesso) {
-        return null;
+    public static Usuario inserir(String email, String nome, String usuario, String senha, nivelAcesso nivelAcesso, String confSenha) {
+        if(senha.equals(confSenha)){
+            if(email.contains("@edu.sc.senai.br")){
+                return new Usuario(email,nome,usuario,senha,nivelAcesso);
+            } else {
+                throw new RuntimeException("Email inválido!");
+            }
+        } else {
+            throw new RuntimeException("Senhas não conferem!");
+        }
     }
 
     public String getEmail() {

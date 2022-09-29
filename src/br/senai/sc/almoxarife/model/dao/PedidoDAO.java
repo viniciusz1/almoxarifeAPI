@@ -1,24 +1,21 @@
 package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Pedido;
-import br.senai.sc.almoxarife.model.entities.Produto;
 import br.senai.sc.almoxarife.model.entities.Status;
 import br.senai.sc.almoxarife.model.factory.Builder;
 import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 import br.senai.sc.almoxarife.model.factory.StatusFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public class PedidoDAO {
     private Connection conn;
-
+    public PedidoDAO() {
+        this.conn = new ConexaoFactory().conectaBD();
+    }
     //PROBLEMA: PARA PEGAR UM PEDIDO, TEM QUE DAR JOIN ENTRE PEDIDOPRODUTO, PRODUTO
     public ArrayList<Pedido> buscarTodosPedidos() {
         ArrayList<Pedido> listaDePedidos = new ArrayList<>();
@@ -70,13 +67,6 @@ public class PedidoDAO {
         System.out.println(sql);
     }
 
-    public PedidoDAO() {
-        try {
-            conn = new ConexaoFactory().conectaBD();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 
     public ArrayList<Pedido> buscarPedidosProfessor(String emailProfessor) {
         ArrayList<Pedido> listaDePedidos = new ArrayList<>();

@@ -8,7 +8,11 @@ public class ConexaoFactory {
     private final String URL = "jdbc:mysql://localhost:3306/almoxarife";
     private final String USERNAME = "root";
     private final String PASSWORD = "root";
-    public Connection conectaBD() throws SQLException {
-        return DriverManager.getConnection(URL, USERNAME,PASSWORD);
+    public Connection conectaBD() {
+        try {
+            return DriverManager.getConnection(URL, USERNAME,PASSWORD);
+        }catch (Exception erro){
+            throw  new RuntimeException("Erro na conexão");
+        }
     }
 }

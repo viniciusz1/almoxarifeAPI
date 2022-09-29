@@ -2,6 +2,7 @@ package br.senai.sc.almoxarife.model.dao;
 
 import br.senai.sc.almoxarife.model.entities.Entrada;
 import br.senai.sc.almoxarife.model.entities.Usuario;
+import br.senai.sc.almoxarife.model.factory.ConexaoFactory;
 import br.senai.sc.almoxarife.model.factory.nivelAcessoFactory;
 
 import java.sql.Connection;
@@ -12,12 +13,27 @@ import java.util.List;
 
 public class UsuarioDAO {
     private Connection conn;
+    public UsuarioDAO() {
+        this.conn = new ConexaoFactory().conectaBD();
+    }
 
     public void inserirUsuario(Usuario usuario){
         String query = "insert into usuario(email, nome, usuario, senha, nivelAcesso) values(?,?,?,?,?)";
-
-
-
+        try (PreparedStatement pstm = conn.prepareStatement(query)){
+            pstm.setString(1, usuario.getEmail());
+            pstm.setString(2, usuario.getNome());
+            pstm.setString(3, usuario.getUsuario());
+            pstm.setString(4, usuario.getSenha());
+            pstm.setObject(5, usuario.getNivelAcesso().ordinal());
+            try{
+                pstm.execute();
+            } catch (Exception e ){
+                throw new RuntimeException("Erro na execução do comando SQL");
+            }
+        } catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL");
+        }
+        System.out.println("Cadastro chegou ao fim");
     }
 
     public ArrayList<Usuario> buscarTodosUsuarios(){
