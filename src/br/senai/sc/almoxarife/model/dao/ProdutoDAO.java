@@ -98,7 +98,7 @@ public class ProdutoDAO {
                 pstm.execute();
                 System.out.println("Depois");
             }catch (Exception e){
-                throw new RuntimeException("Erro na execução do comando SQL - InserirProduto");
+                e.printStackTrace();
             }
         }catch (Exception e){
             e.printStackTrace();
