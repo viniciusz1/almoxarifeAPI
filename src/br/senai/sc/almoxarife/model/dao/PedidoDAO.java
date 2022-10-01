@@ -265,7 +265,23 @@ public class PedidoDAO {
     }
 
     public void inserirPedidoDB(Pedido pedido) {
-        //mais complexo
+        String sql = "insert into pedido (codigo, dataEntrega, dataDevolucao, status, usuarioEmail)" +
+                "values(?,?,?,?,?)";
+        try (PreparedStatement pstm = conn.prepareStatement(sql)){
+            pstm.setInt(1, pedido.getCodigo());
+            pstm.setDate(2, (java.sql.Date) pedido.getDataEntrega());
+            pstm.setDate(3, (java.sql.Date) pedido.getDataDevolucao());
+            pstm.setInt(4, pedido.getStatus().ordinal());
+            pstm.setObject(5, pedido.getUsuarioEmail());
+            try{
+                pstm.execute();
+            } catch (Exception e ){
+                throw new RuntimeException("Erro na execução do comando SQL");
+            }
+        } catch (Exception e){
+            throw new RuntimeException("Erro na preparação do comando SQL");
+        }
+        System.out.println("Cadastro chegou ao fim");
     }
 
 }
