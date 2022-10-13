@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 public class ProdutoDAO {
     private Connection conn;
-    public ProdutoDAO() {
-        this.conn = new ConexaoFactory().conectaBD();
+
+    public ProdutoDAO(){
+        conn = new ConexaoFactory().conectaBD();
     }
+
     public ArrayList<Produto> buscarTodosProdutos() {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
         String sql = "select * from produto";
@@ -67,7 +69,14 @@ public class ProdutoDAO {
     }
 
     public Produto adicionarQuantidadeProduto(int codigo, int qtd){
-        String query = "?";
+        String sql = "UPDATE produto SET quantidade = quantidade + ? WHERE codigo = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, qtd);
+            pstmt.setInt(2, codigo);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 
