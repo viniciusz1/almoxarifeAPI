@@ -31,6 +31,7 @@ public class ProdutoDAO {
         return listaDeProdutos;
     }
 
+    
     public Produto extrairObjetoProduto(ResultSet resultset){
         try{
             return new Produto(resultset.getInt("codigo"),
